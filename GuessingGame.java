@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 public class GuessingGame
 {
-    private int maximumAttempts; 
+    private int maximumAttempts;
     private int countNumberOfAttempts; // track number of attempts
 
     // Creating a random object
@@ -88,7 +88,7 @@ class MyFrame extends JFrame implements ActionListener
         this.add(panel);
 
         this.setTitle("Guessing Game");
-        this.setSize(400, 800);
+        this.setSize(400, 200);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
@@ -97,7 +97,7 @@ class MyFrame extends JFrame implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         String[] gameOptions = {"1. Easy mode", "2. Medium mode", "3. Advanced mode"};
-        int mode = JOptionPane.showOptionDialog(this,
+        int mode = JOptionPane.showOptionDialog(panel,
                 "Choose a difficulty level:",
                 "Select Mode",
                 JOptionPane.DEFAULT_OPTION,
@@ -124,35 +124,38 @@ class MyFrame extends JFrame implements ActionListener
                 return;
         }
 
-        boolean guessedNumberCorrectly = false; //track if user guessed the correct number
-        String guessInStringForm = null; // initializing  the guess in the string form;
+        boolean guessedNumberCorrectly = false; // track if user guessed the correct number
+        String guessInStringForm = null; // initializing the guess in the string form
         for (int attempts = 0; attempts < maxAttempts; attempts++)
         {
             game.incrementAttempts();
-            guessInStringForm= JOptionPane.showInputDialog(this, "Attempt " + (game.getNumberOfAttempts()) + " of " + maxAttempts + ". Enter your guess:");
+            guessInStringForm = JOptionPane.showInputDialog(panel, "Attempt " + (game.getNumberOfAttempts()) + " of " + maxAttempts + ". Enter your guess:");
             if (guessInStringForm == null) // user pressed the cancel button
-                JOptionPane.showMessageDialog(this, "You are exiting the game, bye!"); 
+            {
+                JOptionPane.showMessageDialog(panel, "You are exiting the game, bye!");
+                return;
+            }
 
             int guess = Integer.parseInt(guessInStringForm);
             if (guess == guessNumber)
             {
-                JOptionPane.showMessageDialog(this, "Congratulations! You guessed the number correctly in " + game.getNumberOfAttempts() + " attempts.");
+                JOptionPane.showMessageDialog(panel, "Congratulations! You guessed the number correctly in " + game.getNumberOfAttempts() + " attempts.");
                 guessedNumberCorrectly = true;
                 break;
             } 
             else if (guess < guessNumber)
             {
-                JOptionPane.showMessageDialog(this, "That guess is too low! Try again. Number of attempts left: " + (maxAttempts-game.getNumberOfAttempts()));
+                JOptionPane.showMessageDialog(panel, "That guess is too low! Try again. Number of attempts left: " + (maxAttempts - game.getNumberOfAttempts()));
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "That guess is too high! Try again. Number of attempts left: " + (maxAttempts - game.getNumberOfAttempts()));
+                JOptionPane.showMessageDialog(panel, "That guess is too high! Try again. Number of attempts left: " + (maxAttempts - game.getNumberOfAttempts()));
             }
         }
 
-        if (!guessedNumberCorrectly && !(guessInStringForm == null) )
+        if (!guessedNumberCorrectly)
         {
-            JOptionPane.showMessageDialog(this, "Sorry, you've reached your maximum attempts. The correct number was " + guessNumber + ".");
+            JOptionPane.showMessageDialog(panel, "Sorry, you've reached your maximum attempts. The correct number was " + guessNumber + ".");
         }
     }
 }
