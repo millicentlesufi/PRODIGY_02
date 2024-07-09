@@ -82,6 +82,7 @@ class MyFrame extends JFrame implements ActionListener
         button = new JButton("Start Game");
         button.addActionListener(this);
 
+
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(button);
 
