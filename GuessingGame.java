@@ -125,12 +125,13 @@ class MyFrame extends JFrame implements ActionListener
         }
 
         boolean guessedNumberCorrectly = false; //track if user guessed the correct number
+        String guessInStringForm = null; // initializing  the guess in the string form;
         for (int attempts = 0; attempts < maxAttempts; attempts++)
         {
             game.incrementAttempts();
-            String guessInStringForm = JOptionPane.showInputDialog(this, "Attempt " + (game.getNumberOfAttempts()) + " of " + maxAttempts + ". Enter your guess:");
+            guessInStringForm= JOptionPane.showInputDialog(this, "Attempt " + (game.getNumberOfAttempts()) + " of " + maxAttempts + ". Enter your guess:");
             if (guessInStringForm == null) // user pressed the cancel button
-                break; 
+                JOptionPane.showMessageDialog(this, "You are exiting the game, bye!"); 
 
             int guess = Integer.parseInt(guessInStringForm);
             if (guess == guessNumber)
@@ -149,7 +150,7 @@ class MyFrame extends JFrame implements ActionListener
             }
         }
 
-        if (!guessedNumberCorrectly)
+        if (!guessedNumberCorrectly && !(guessInStringForm == null) )
         {
             JOptionPane.showMessageDialog(this, "Sorry, you've reached your maximum attempts. The correct number was " + guessNumber + ".");
         }
