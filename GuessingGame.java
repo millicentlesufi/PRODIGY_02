@@ -88,7 +88,7 @@ class MyFrame extends JFrame implements ActionListener
         this.add(panel);
 
         this.setTitle("Guessing Game");
-        this.setSize(400, 200);
+        this.setSize(400, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
