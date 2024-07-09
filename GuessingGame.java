@@ -1,16 +1,17 @@
 package PRODIGY_02;
 
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class GuessingGame
-{
+public class GuessingGame {
     private int maximumAttempts;
     private int countNumberOfAttempts; // track number of attempts
 
@@ -52,39 +53,38 @@ public class GuessingGame
     }
 
     // obtain attempts user made to play the game
-    public int getNumberOfAttempts()
-    {
+    public int getNumberOfAttempts() {
         return this.countNumberOfAttempts;
     }
 
-    public int getMaxAttempts()
-    {
+    public int getMaxAttempts() {
         return this.maximumAttempts;
     }
 
-    public void incrementAttempts() 
-    {
+    public void incrementAttempts() {
         this.countNumberOfAttempts++;
     }
 }
 
-class MyFrame extends JFrame implements ActionListener
-{
+class MyFrame extends JFrame implements ActionListener {
     private JButton button;
     private JPanel panel;
     private GuessingGame game;
 
-    public MyFrame()
-    {
+    public MyFrame() {
         game = new GuessingGame();
 
-        panel = new JPanel();
+        panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
         button = new JButton("Start Game");
+        button.setPreferredSize(new Dimension(200, 50));
         button.addActionListener(this);
 
-
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(button);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+        panel.add(button, gridBagConstraints);
 
         this.add(panel);
 
@@ -107,8 +107,7 @@ class MyFrame extends JFrame implements ActionListener
 
         int guessNumber = 0;
         int maxAttempts = 0;
-        switch (mode)
-        {
+        switch (mode) {
             case 0: // Easy
                 guessNumber = game.easyModeNumber();
                 maxAttempts = game.getMaxAttempts();
@@ -127,8 +126,7 @@ class MyFrame extends JFrame implements ActionListener
 
         boolean guessedNumberCorrectly = false; // track if user guessed the correct number
         String guessInStringForm = null; // initializing the guess in the string form
-        for (int attempts = 0; attempts < maxAttempts; attempts++)
-        {
+        for (int attempts = 0; attempts < maxAttempts; attempts++) {
             game.incrementAttempts();
             guessInStringForm = JOptionPane.showInputDialog(panel, "Attempt " + (game.getNumberOfAttempts()) + " of " + maxAttempts + ". Enter your guess:");
             if (guessInStringForm == null) // user pressed the cancel button
@@ -138,24 +136,18 @@ class MyFrame extends JFrame implements ActionListener
             }
 
             int guess = Integer.parseInt(guessInStringForm);
-            if (guess == guessNumber)
-            {
+            if (guess == guessNumber) {
                 JOptionPane.showMessageDialog(panel, "Congratulations! You guessed the number correctly in " + game.getNumberOfAttempts() + " attempts.");
                 guessedNumberCorrectly = true;
                 break;
-            } 
-            else if (guess < guessNumber)
-            {
+            } else if (guess < guessNumber) {
                 JOptionPane.showMessageDialog(panel, "That guess is too low! Try again. Number of attempts left: " + (maxAttempts - game.getNumberOfAttempts()));
-            }
-            else
-            {
+            } else {
                 JOptionPane.showMessageDialog(panel, "That guess is too high! Try again. Number of attempts left: " + (maxAttempts - game.getNumberOfAttempts()));
             }
         }
 
-        if (!guessedNumberCorrectly)
-        {
+        if (!guessedNumberCorrectly) {
             JOptionPane.showMessageDialog(panel, "Sorry, you've reached your maximum attempts. The correct number was " + guessNumber + ".");
         }
     }
