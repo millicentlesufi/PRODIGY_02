@@ -108,15 +108,15 @@ class MyFrame extends JFrame implements ActionListener
         int maxAttempts = 0;
         switch (mode)
         {
-            case 1: // Easy
+            case 0: // Easy
                 guessNumber = game.easyModeNumber();
                 maxAttempts = game.getMaxAttempts();
                 break;
-            case 2: // Medium
+            case 1: // Medium
                 guessNumber = game.mediumModeNumber();
                 maxAttempts = game.getMaxAttempts();
                 break;
-            case 3: // Advanced
+            case 2: // Advanced
                 guessNumber = game.advancedModeNumber();
                 maxAttempts = game.getMaxAttempts();
                 break;
